@@ -1,20 +1,21 @@
 
 % Create tournament population
+% population(i) == populationFitness(i)
 
 
-function tournament = tournamentSelection(dimension, tournamentSize, population)
+function parent = tournamentSelection(populationFitness, populationSize, tournamentSize)
     
-    tournament = zeros(tournamentSize, dimension);
+    % returns k (tournamentSize) values randomly, 
+    % from the integers 1 to n (populationSize).
+    indices = randsample(populationSize, tournamentSize);
     
-    i = 1;
-    while i <= tournamentSize
-       a = randi(tournamentSize);
-       individual = population(a,:);
-       
-       if ~ismember(individual, tournament)
-            tournament(i,:) = individual;
-            i = i + 1;
-       end
-    end
+    % select values of the randomly generated indices 
+    % form the populationFitness, then select the fittest.
+    tournament = populationFitness(indices);
+    fittest = min(tournament);
+
+    % find the index of the fittest in the 
+    % tournament population from populationFitness
+    parent = find(populationFitness==fittest);
     
 end

@@ -19,14 +19,8 @@ disp(population)
 % a = randi(5);
 % disp(population(a,:))
 
-
-S = randsample(populationSize, tournamentSize);
-disp(S)
-spop = population(S,:);
-disp(spop)
-
-% t = tournamentSelection(dimension, tournamentSize, population);
-% disp(t)
+t = tournamentSelection(populationSize, tournamentSize, population);
+disp(t)
 
 % parent1 = rand(1, populationSize);
 % parent2 = rand(1, populationSize);

@@ -37,16 +37,18 @@ for i = 1:numF
         disp(population)
         %disp(population(1,:))
 
-        % tournament = tournamentSelection(dimension, tournamentSize, population);
-        % disp(tournament)
-
         populationFitness = calculateFitnessPopulation_2005(fitfun, population, o, A, M, a, alpha, b); %Fitness values of all individuals (smaller value is better)
         bestSolutionFitness = min(populationFitness);
         currentEval = currentEval + populationSize;
-        disp(populationFitness)
+        % disp(populationFitness)
 
-        % individualFitness = calculateFitness_2005(fitfun, population(5, :), o, A, M, a, alpha, b);
+        p = tournamentSelection(populationFitness, populationSize, tournamentSize);
+        parent = population(p, :);
+        disp(parent)
+
+        % individualFitness = calculateFitness_2005(fitfun, population(p, :), o, A, M, a, alpha, b);
         % disp(individualFitness)
+
         % Algorithm loop
 
         while (objetiveValue < bestSolutionFitness && currentEval < maxEval)
