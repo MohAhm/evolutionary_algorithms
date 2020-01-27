@@ -11,6 +11,8 @@ dimension = 30; % Dimension of the problem
 populationSize = 10; % Adjust this to your algorithm
 
 tournamentSize = 5;
+elitism = 4;
+crossoverRate = 0.8;
 
 for i = 1:numF
 
@@ -33,18 +35,12 @@ for i = 1:numF
             population(j, :) = lower + (upper - lower) .* rand(1, dimension);
 
         end
-
-        disp(population)
-        %disp(population(1,:))
+        % disp(population)
 
         populationFitness = calculateFitnessPopulation_2005(fitfun, population, o, A, M, a, alpha, b); %Fitness values of all individuals (smaller value is better)
         bestSolutionFitness = min(populationFitness);
         currentEval = currentEval + populationSize;
         % disp(populationFitness)
-
-        p = tournamentSelection(populationFitness, populationSize, tournamentSize);
-        parent = population(p, :);
-        disp(parent)
 
         % individualFitness = calculateFitness_2005(fitfun, population(p, :), o, A, M, a, alpha, b);
         % disp(individualFitness)
@@ -58,19 +54,31 @@ for i = 1:numF
             populationFitness = calculateFitnessPopulation_2005(fitfun, population, o, A, M, a, alpha, b); %Fitness values of all individuals (smaller value is better)
             bestSolutionFitness = min(populationFitness);
             currentEval = currentEval + populationSize;
+            % disp(populationFitness)
 
-            %%  Select individual
-            %               tournament = tournamentSelection(dimension, tournamentSize, population);
-            %               disp(tournament)
-            %               tournamentFitness = calculateFitnessPopulation_2005(fitfun, tournament, o, A, M, a, alpha, b);
-            %               parent = min(tournamentFitness);
-            %               disp(parent)
+            idx = elitism + 1;
+            while idx < populationSize
 
-            % fprintf('Parent %d\n', parent);
+                %%  Select individual
+                p1 = tournamentSelection(populationFitness, populationSize, tournamentSize);
+                parent1 = population(p1, :);
+                p2 = tournamentSelection(populationFitness, populationSize, tournamentSize);
+                parent2 = population(p2, :);
 
-            %%  Apply crossover
+                %%  Apply crossover
+                [offspring1, offspring2] = simpleArithmeticCrossover(crossoverRate, 0.5, parent1, parent2);
 
-            %%  Mutate the individual
+                %%  Mutate the individual
+
+
+                %% Place the resulting chromosomes into the population
+                population(idx,:) = offspring1;
+                population(idx + 1,:) = offspring2;
+
+                idx = idx + 2;
+            end
+            idx = 0;
+
 
             % ...
 

@@ -16,6 +16,6 @@ function parent = tournamentSelection(populationFitness, populationSize, tournam
 
     % find the index of the fittest in the 
     % tournament population from populationFitness
-    parent = find(populationFitness==fittest);
+    parent = find(populationFitness==fittest, 1, 'first');
     
 end
