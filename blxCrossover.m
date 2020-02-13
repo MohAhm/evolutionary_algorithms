@@ -1,18 +1,21 @@
-function offspring = blxCrossover(dimension, p1, p2, a, upper, lower)
-
+function offspring = blxCrossover(dimension, parent1, parent2, upper, lower)
+    alpha = 0.5;
+    
     for i = 1 : dimension
-        maxVal = max(p1(i), p2(i));
-        minVal = min(p1(i), p2(i));
-        interval = maxVal - minVal;
+        Cmax = max(parent1(i), parent2(i));
+        Cmin = min(parent1(i), parent2(i));
+        I = Cmax - Cmin;
 
-        gene = (minVal - interval * a) + ((maxVal + interval * a) - (minVal - interval * a));
+        % generate alpha random number between interval
+        % Hk = [Cmin − I*α, Cmax + I*α]
+        Hk = ((Cmax + I * alpha) - (Cmin - I * alpha)) .* rand(1,1) + (Cmin - I * alpha);
 
-        if gene > upper
+        if Hk > upper
             offspring(i) = upper;
-        elseif gene < lower
+        elseif Hk < lower
             offspring(i) = lower;
         else
-            offspring(i) = gene;
+            offspring(i) = Hk;
         end
     end
 
