@@ -1,18 +1,10 @@
-% Create tournament population
-% population(i) == populationFitness(i)
 
-function parent = tournamentSelection(populationFitness, populationSize, tournamentSize)
+function p = tournamentSelection(populationFitness, populationSize, K)
 
-    % returns k (tournamentSize) values randomly,
-    % from the integers 1 to n (populationSize).
-    indices = randsample(populationSize, tournamentSize);
+    indexSelect = randperm(populationSize, K); % k randomly selected indices
+    fitness = populationFitness(indexSelect); % the individuals of the selected indices
 
-    % select values of the randomly generated indices
-    % form the populationFitness, then select the fittest.
-    tournament = populationFitness(indices);
-    fittest = min(tournament);
-
-    % find the index of the fittest
-    parent = find(populationFitness == fittest, 1, 'first');
-
+    tournament = containers.Map(fitness, indexSelect);
+    p = tournament(min(fitness));
+    
 end

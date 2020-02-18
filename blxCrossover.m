@@ -1,22 +1,18 @@
-function offspring = blxCrossover(dimension, parent1, parent2, upper, lower)
-    alpha = 0.5;
+function offspring = blxCrossover(parent1, parent2, Pc)
+    alpha = 0.45;
     
-    for i = 1 : dimension
-        Cmax = max(parent1(i), parent2(i));
-        Cmin = min(parent1(i), parent2(i));
-        I = Cmax - Cmin;
-
-        % generate alpha random number between interval
-        % Hk = [Cmin − I*α, Cmax + I*α]
-        Hk = ((Cmax + I * alpha) - (Cmin - I * alpha)) .* rand(1,1) + (Cmin - I * alpha);
-
-        if Hk > upper
-            offspring(i) = upper;
-        elseif Hk < lower
-            offspring(i) = lower;
-        else
-            offspring(i) = Hk;
-        end
+    if rand < Pc
+        for i = 1 : length(parent1)
+            Cmax = max(parent1(i), parent2(i));
+            Cmin = min(parent1(i), parent2(i));
+            I = Cmax - Cmin;
+    
+            % Hk: [Cmin − I*α, Cmax + I*α]
+            offspring(i) = (Cmin - I * alpha) + ((Cmax + I * alpha) - (Cmin - I * alpha)) .* rand(1,1);
+        end        
+    else
+        offspring = parent1;
     end
+
 
 end

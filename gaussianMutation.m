@@ -1,12 +1,12 @@
-function mutatedOffspring = gaussianMutation(dimension, offspring, mutationRate)
+function mutatedOffspring = gaussianMutation(offspring, Pm)
     delta = 0.1;
 
-    for i = 1 : dimension
-        if rand < mutationRate  
-            mutatedOffspring(i) = offspring(i) + sqrt(delta) * randn(1);
-        else
-            mutatedOffspring(i) = offspring(i);
-        end
-    end         
+    if rand < Pm 
+        for i = 1 : length(offspring)
+            mutatedOffspring(i) = offspring(i) + sqrt(delta) * randn(1);         
+        end   
+    else
+        mutatedOffspring = offspring;
+    end
 
 end

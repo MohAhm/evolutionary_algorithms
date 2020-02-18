@@ -1,19 +1,15 @@
-function parent = rouletteWheelSelection(dimension, populationFitness, fitnessSort)
+function idx = rouletteWheelSelection(fitnessSort)
 
     sumFinesses = sum(fitnessSort);
     rouletteWheelPosition = rand * sumFinesses;
-
     individualProbabilities = cumsum(fitnessSort);
-    fitnessSort = flip(fitnessSort);
 
-    for i = 1 : dimension
+    for i = 1 : length(individualProbabilities)
         if rouletteWheelPosition <= individualProbabilities(i)
-            idx = find(populationFitness == fitnessSort(i), 1, 'first');
-            parent = idx;
+            idx = i;
             break
         else
-            idx = find(populationFitness == fitnessSort(i), 1, 'first');
-            parent = idx;
+            idx = i;
         end
     end
 
