@@ -1,9 +1,9 @@
 path = '/Users/moah11/Documents/AI/evolutionary_algorithms/2005';
 addpath(genpath(path))
 
-%  functions = [1 2 3 4 5 6 7 8 9 10]; %functions being solved
-functions = 1; 
-%example: functions = [2 4 9];
+ functions = [1 2 3 4 5 6 7 8 9 10]; %functions being solved
+% functions = 1; 
+% functions = [2 4 9];
 numF = size(functions,2);
 nTimes = 20; % Number of times in which a function is going to be solved
 % nTimes = 1; 
@@ -13,7 +13,7 @@ populationSize = 20; % Adjust this to your algorithm
 
 
 F = 0.7; % F: Scaling Factor
-Pr = 0.2; % Pr: Recombination Probability
+Pr = 0.5; % Pr: Recombination Probability
 
 
 for i = 1:numF
@@ -60,7 +60,6 @@ for i = 1:numF
 
                     % DE - Recombination
                     individual = population(idx, :);
-                    offspring = zeros(1, dimension);
 
                     for gene = 1 : dimension
                          if rand < Pr || gene == randi(dimension)
@@ -72,7 +71,6 @@ for i = 1:numF
 
                     % DE - Selection
                     offspringFitness = calculateFitness_2005(fitfun, offspring, o, A, M, a, alpha, b);
-                    
                     if offspringFitness < populationFitness(idx)
                          newPopulation(idx, :) = offspring;
                     else
@@ -94,8 +92,12 @@ for i = 1:numF
           
           % best individual
           bestSolutionFitness = min(populationFitness);
+          bestSolutions(t) = bestSolutionFitness;
           fprintf('%dth run, The best individual fitness is %d\n', t, bestSolutionFitness);
 
      end
+
+     meanValue = mean(bestSolutions);
+     fprintf('Mean value: %d\n', meanValue);
 
 end

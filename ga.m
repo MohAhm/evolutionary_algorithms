@@ -1,9 +1,9 @@
 path = '/Users/moah11/Documents/AI/evolutionary_algorithms/2005';
 addpath(genpath(path))
 
-% functions = [1 2 3 4 5 6 7 8 9 10]; %functions being solved
-functions = 1;
-%example: functions = [2 4 9];
+functions = [1 2 3 4 5 6 7 8 9 10]; %functions being solved
+% functions = 1;
+% functions = [2 4 9];
 numF = size(functions,2);
 nTimes = 20; % Number of times in which a function is going to be solved
 % nTimes = 1; 
@@ -13,7 +13,7 @@ populationSize = 200; % Adjust this to your algorithm
 
 
 Pc = 0.9; % Pr: Crossover Probability
-Pm = 0.2; % Pr: Mutation Probability
+Pm = 0.45; % Pr: Mutation Probability
 
 
 for i = 1:numF 
@@ -73,6 +73,7 @@ for i = 1:numF
                     % GA - Mutation
                     mutatedOffspring = gaussianMutation(offspring, Pm);
 
+                    % GA - Replacement, accept the offspring if its fitness is better 
                     offspringFitness = calculateFitness_2005(fitfun, mutatedOffspring, o, A, M, a, alpha, b);
                     if offspringFitness < populationFitness(idx)
                          newPopulation(idx, :) = mutatedOffspring;
@@ -95,8 +96,12 @@ for i = 1:numF
 
           % best individual
           bestSolutionFitness = min(populationFitness);
+          bestSolutions(t) = bestSolutionFitness;
           fprintf('%dth run, The best individual fitness is %d\n', t, bestSolutionFitness);
 
      end
+
+     meanValue = mean(bestSolutions);
+     fprintf('Mean value: %d\n', meanValue);
 
 end
